@@ -1,0 +1,27 @@
+{
+  "name": "gitview",
+  "version": "1.0.0",
+  "description": "Extension pour rechercher et accéder aux dépôts GitHub",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:edge": "node package-edge.js",
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "keywords": [
+    "github",
+    "extension",
+    "browser",
+    "edge",
+    "chrome",
+    "firefox"
+  ],
+  "author": "Votre Nom",
+  "license": "MIT",
+  "devDependencies": {
+    "archiver": "^5.3.1",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+} 
