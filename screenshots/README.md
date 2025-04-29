@@ -1,6 +1,10 @@
 # Captures d'écran pour GitView
 
-Les captures d'écran suivantes sont nécessaires pour le Chrome Web Store :
+Ce dossier est destiné à stocker les captures d'écran de l'extension pour la documentation GitHub.
+
+## Captures d'écran nécessaires
+
+Pour une bonne documentation, il est recommandé d'ajouter les captures d'écran suivantes :
 
 1. `main-view.png` (1280x800)
    - Vue principale de l'extension
@@ -27,11 +31,6 @@ Les captures d'écran suivantes sont nécessaires pour le Chrome Web Store :
    - Contraste des couleurs
    - Lisibilité du texte
 
-6. `mobile-view.png` (375x667)
-   - Version mobile de l'extension
-   - Design responsive
-   - Adaptation aux petits écrans
-
 ## Instructions pour les captures d'écran
 
 - Format : PNG
@@ -40,4 +39,11 @@ Les captures d'écran suivantes sont nécessaires pour le Chrome Web Store :
 - Style cohérent avec l'interface GitHub
 - Inclure des données factices pour les démonstrations
 - Éviter les informations sensibles
-- Mettre en évidence les fonctionnalités principales 
+- Mettre en évidence les fonctionnalités principales
+
+## Comment prendre les captures d'écran
+
+1. Ouvrez l'extension dans votre navigateur
+2. Utilisez l'outil de capture d'écran de votre système d'exploitation
+3. Enregistrez les captures dans ce dossier avec les noms suggérés
+4. Assurez-vous que les captures sont claires et professionnelles 
