@@ -57,7 +57,7 @@ Pour mettre à jour l'extension :
 ## Support
 
 ### Comment signaler un bug ?
-1. Allez sur la [page des issues GitHub](https://github.com/yourusername/gitview/issues)
+1. Allez sur la [page des issues GitHub](https://github.com/DelsarteDorian/gitview/issues)
 2. Vérifiez si le bug a déjà été signalé
 3. Créez une nouvelle issue avec :
    - Description détaillée du problème
@@ -65,10 +65,10 @@ Pour mettre à jour l'extension :
    - Version du navigateur et de l'extension
 
 ### Comment suggérer une nouvelle fonctionnalité ?
-1. Allez sur la [page des issues GitHub](https://github.com/yourusername/gitview/issues)
+1. Allez sur la [page des issues GitHub](https://github.com/DelsarteDorian/gitview/issues)
 2. Créez une nouvelle issue avec le label "enhancement"
 3. Décrivez la fonctionnalité souhaitée
 
 ### Où puis-je obtenir de l'aide supplémentaire ?
-- Consultez la [documentation](https://github.com/yourusername/gitview/wiki)
+- Consultez la [documentation](https://github.com/DelsarteDorian/gitview/wiki)
 - Ouvrez une issue sur GitHub 
