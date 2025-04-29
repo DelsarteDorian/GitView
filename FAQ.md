@@ -40,7 +40,7 @@ GitView est open-source, vous pouvez vérifier le code source sur GitHub. De plu
 ### L'extension ne se charge pas, que faire ?
 1. Vérifiez que vous utilisez la dernière version de votre navigateur
 2. Essayez de désinstaller et réinstaller l'extension
-3. Contactez le support si le problème persiste
+3. Consultez la documentation si le problème persiste
 
 ### Je ne vois pas mes dépôts privés, pourquoi ?
 Assurez-vous que :
@@ -49,10 +49,10 @@ Assurez-vous que :
 3. Vous êtes connecté avec le bon profil
 
 ### Comment mettre à jour l'extension ?
-Les mises à jour sont automatiques via le Chrome Web Store. Vous pouvez aussi :
-1. Aller dans `chrome://extensions/`
-2. Activer "Mise à jour automatique"
-3. Cliquer sur "Mettre à jour" si disponible
+Pour mettre à jour l'extension :
+1. Téléchargez la dernière version depuis GitHub
+2. Suivez les instructions d'installation manuelle
+3. Redémarrez votre navigateur
 
 ## Support
 
@@ -71,5 +71,4 @@ Les mises à jour sont automatiques via le Chrome Web Store. Vous pouvez aussi :
 
 ### Où puis-je obtenir de l'aide supplémentaire ?
 - Consultez la [documentation](https://github.com/yourusername/gitview/wiki)
-- Contactez-nous à support@gitview.com
-- Rejoignez notre [Discord](https://discord.gg/...) 
+- Ouvrez une issue sur GitHub 

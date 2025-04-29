@@ -1,12 +1,5 @@
 # Guide d'Installation de GitView
 
-## Installation depuis le Chrome Web Store
-
-1. Ouvrez le [Chrome Web Store](https://chrome.google.com/webstore/detail/gitview/...)
-2. Cliquez sur le bouton "Ajouter à Chrome"
-3. Confirmez l'installation en cliquant sur "Installer l'extension"
-4. Une fois installée, l'icône de GitView apparaîtra dans votre barre d'outils
-
 ## Installation depuis le code source
 
 ### Prérequis
@@ -44,12 +37,6 @@ npm run build
      2. Cliquez sur "Ce Firefox"
      3. Cliquez sur "Charger un module temporaire"
      4. Sélectionnez le fichier `manifest.json` dans le dossier `dist`
-
-   - Edge :
-     1. Allez sur `edge://extensions/`
-     2. Activez le "Mode développeur"
-     3. Cliquez sur "Charger une extension non empaquetée"
-     4. Sélectionnez le dossier `dist`
 
 ## Configuration initiale
 

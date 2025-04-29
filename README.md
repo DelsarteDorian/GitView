@@ -15,11 +15,6 @@ GitView est une extension de navigateur qui vous permet de rechercher et d'accé
 
 ## Installation
 
-### Chrome Web Store
-1. Visitez le [Chrome Web Store](https://chrome.google.com/webstore/detail/gitview/...)
-2. Cliquez sur "Ajouter à Chrome"
-3. Confirmez l'installation
-
 ### Installation manuelle
 1. Téléchargez ou clonez ce dépôt
 2. Ouvrez Chrome et allez dans `chrome://extensions/`
@@ -68,15 +63,13 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 
 Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-## Contact
+## Support
 
-Pour toute question ou suggestion, n'hésitez pas à :
-- Ouvrir une issue sur ce dépôt
-- Nous contacter via le formulaire de support
-- Consulter notre documentation
+Si vous rencontrez des problèmes ou avez des questions :
+- Ouvrez une [issue](https://github.com/yourusername/gitview/issues) sur GitHub
+- Consultez la [documentation](https://github.com/yourusername/gitview/wiki)
 
 ## Remerciements
 
 - [GitHub](https://github.com) pour l'API
-- [Octicons](https://primer.style/octicons/) pour les icônes
 - Tous les contributeurs qui ont aidé à améliorer GitView 
