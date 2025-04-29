@@ -66,8 +66,8 @@ Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de
 ## Support
 
 Si vous rencontrez des problèmes ou avez des questions :
-- Ouvrez une [issue](https://github.com/yourusername/gitview/issues) sur GitHub
-- Consultez la [documentation](https://github.com/yourusername/gitview/wiki)
+- Ouvrez une [issue](https://github.com/DelsarteDorian/gitview/issues) sur GitHub
+- Consultez la [documentation](https://github.com/DelsarteDorian/gitview/wiki)
 
 ## Remerciements
 
