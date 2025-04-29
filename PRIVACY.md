@@ -33,7 +33,7 @@ Cette politique de confidentialité peut être mise à jour occasionnellement. L
 ## Contact
 
 Pour toute question concernant cette politique de confidentialité, veuillez nous contacter à :
-- Email : privacy@gitview.com
-- GitHub : [https://github.com/votrecompte](https://github.com/votrecompte)
+- Email : dorian.delsarte.informatique@gmail.com
+- GitHub : [https://github.com/DelsarteDorian](https://github.com/DelsarteDorian)
 
 Dernière mise à jour : [Date] 
