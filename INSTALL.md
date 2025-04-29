@@ -67,6 +67,6 @@ npm run build
 ## Support
 
 Si vous rencontrez des problèmes, n'hésitez pas à :
-1. Consulter la [documentation](https://github.com/yourusername/gitview/wiki)
-2. Ouvrir une [issue](https://github.com/yourusername/gitview/issues)
+1. Consulter la [documentation](https://github.com/DelsarteDorian/gitview/wiki)
+2. Ouvrir une [issue](https://github.com/DelsarteDorian/gitview/issues)
 3. Nous contacter à support@gitview.com 
