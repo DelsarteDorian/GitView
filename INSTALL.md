@@ -11,7 +11,7 @@
 
 1. Clonez le dépôt :
 ```bash
-git clone https://github.com/yourusername/gitview.git
+git clone https://github.com/DelsarteDorian/gitview.git
 cd gitview
 ```
 
