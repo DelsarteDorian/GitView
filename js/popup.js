@@ -1,4 +1,40 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    // Gestion du thème
+    const themeSwitch = document.getElementById('theme-switch');
+    const sunIcon = themeSwitch.querySelector('.sun-icon');
+    const moonIcon = themeSwitch.querySelector('.moon-icon');
+    const themeText = themeSwitch.querySelector('.theme-text');
+
+    // Charger le thème sauvegardé
+    const { theme } = await chrome.storage.local.get('theme');
+    if (theme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+        themeText.textContent = 'Thème sombre';
+    }
+
+    // Gérer le changement de thème
+    themeSwitch.addEventListener('click', async () => {
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            document.body.removeAttribute('data-theme');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+            themeText.textContent = 'Thème clair';
+            await chrome.storage.local.set({ theme: 'light' });
+        } else {
+            document.body.setAttribute('data-theme', 'dark');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+            themeText.textContent = 'Thème sombre';
+            await chrome.storage.local.set({ theme: 'dark' });
+        }
+    });
+
+    // Initialisation du gestionnaire de profils
+    const profileManager = new ProfileManager();
+    
     // Gestion des onglets
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -32,13 +68,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const typeFilter = document.getElementById('type-filter');
     const languageFilter = document.getElementById('language-filter');
     const sortFilter = document.getElementById('sort-filter');
+    const advancedSearchToggle = document.getElementById('advanced-search-toggle');
+    const advancedSearch = document.getElementById('advanced-search');
+    const organizationFilter = document.getElementById('organization-filter');
+    const starsFilter = document.getElementById('stars-filter');
+    const dateCreatedFilter = document.getElementById('date-created-filter');
+    const dateUpdatedFilter = document.getElementById('date-updated-filter');
     const repositoriesContainer = document.getElementById('repositories-container');
     const errorMessage = document.getElementById('error-message');
     const repositoryTemplate = document.getElementById('repository-template');
 
     // Vérification des éléments
     if (!usernameInput || !searchBtn || !typeFilter || !languageFilter || !sortFilter || 
-        !repositoriesContainer || !errorMessage || !repositoryTemplate) {
+        !repositoriesContainer || !errorMessage || !repositoryTemplate || !advancedSearchToggle || 
+        !advancedSearch || !organizationFilter || !starsFilter || !dateCreatedFilter || !dateUpdatedFilter) {
         console.error('Un ou plusieurs éléments du DOM sont manquants');
         return;
     }
@@ -62,6 +105,63 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     if (sortFilter) {
         sortFilter.addEventListener('change', () => updateFilters('sort', sortFilter.value));
+    }
+
+    // Gestion de la recherche avancée
+    advancedSearchToggle.addEventListener('click', () => {
+        advancedSearch.classList.toggle('hidden');
+        advancedSearchToggle.textContent = advancedSearch.classList.contains('hidden') 
+            ? 'Recherche avancée' 
+            : 'Masquer la recherche avancée';
+    });
+
+    // Fonction pour récupérer le profil actif
+    async function getActiveProfile() {
+        try {
+            const { profiles, activeProfileId } = await chrome.storage.local.get(['profiles', 'activeProfileId']);
+            if (!profiles || !activeProfileId) return null;
+            return profiles.find(profile => profile.id === activeProfileId) || null;
+        } catch (error) {
+            console.error('Erreur lors de la récupération du profil actif:', error);
+            return null;
+        }
+    }
+
+    // Chargement des organisations lors de la saisie du nom d'utilisateur
+    usernameInput.addEventListener('input', debounce(async (e) => {
+        const username = e.target.value.trim();
+        if (username) {
+            try {
+                const activeProfile = await getActiveProfile();
+                const orgs = await githubAPI.getOrganizations(username, activeProfile?.token);
+                
+                organizationFilter.innerHTML = '<option value="">Toutes les organisations</option>';
+                orgs.forEach(org => {
+                    const option = document.createElement('option');
+                    option.value = org.login;
+                    option.textContent = org.login;
+                    organizationFilter.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erreur lors du chargement des organisations:', error);
+                organizationFilter.innerHTML = '<option value="">Toutes les organisations</option>';
+            }
+        } else {
+            organizationFilter.innerHTML = '<option value="">Toutes les organisations</option>';
+        }
+    }, 500));
+
+    // Fonction utilitaire pour debounce
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
     }
 
     async function handleSearch() {
@@ -91,6 +191,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const filteredRepos = githubAPI.filterRepositories(repos, currentFilters);
         repositoriesContainer.innerHTML = '';
 
+        if (filteredRepos.length === 0) {
+            repositoriesContainer.innerHTML = '<p class="no-results">Aucun dépôt trouvé</p>';
+            return;
+        }
+
         filteredRepos.forEach(repo => {
             const clone = repositoryTemplate.content.cloneNode(true);
             
@@ -107,8 +212,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (repoName) repoName.href = repo.html_url;
             if (repoName) repoName.textContent = repo.name;
             if (repoVisibility) {
-                repoVisibility.textContent = repo.private ? 'Privé' : 'Public';
-                repoVisibility.style.display = repo.private ? 'inline-block' : 'none';
+                repoVisibility.textContent = repo.private ? '🔒 Privé' : '🌐 Public';
+                repoVisibility.className = `repo-visibility ${repo.private ? 'private' : 'public'}`;
             }
             if (repoDescription) repoDescription.textContent = repo.description || 'Pas de description';
             if (languageColor && repo.language) {
@@ -117,7 +222,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (languageName) languageName.textContent = repo.language || 'Non spécifié';
             if (repoStars) repoStars.textContent = `⭐ ${repo.stars}`;
             if (repoForks) repoForks.textContent = `🍴 ${repo.forks}`;
-            if (repoUpdated) repoUpdated.textContent = formatDate(repo.updated_at);
+            if (repoUpdated) repoUpdated.textContent = `🕒 Mis à jour le ${formatDate(repo.updated_at)}`;
 
             repositoriesContainer.appendChild(clone);
         });
@@ -281,15 +386,90 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function formatDate(date) {
-        const now = new Date();
-        const diff = now - date;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        
-        if (days === 0) return 'Aujourd\'hui';
-        if (days === 1) return 'Hier';
-        if (days < 7) return `Il y a ${days} jours`;
-        if (days < 30) return `Il y a ${Math.floor(days / 7)} semaines`;
-        if (days < 365) return `Il y a ${Math.floor(days / 30)} mois`;
-        return `Il y a ${Math.floor(days / 365)} ans`;
+        return new Date(date).toLocaleDateString('fr-FR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+    // Fonction de recherche mise à jour
+    async function performSearch() {
+        const username = usernameInput.value.trim();
+        if (!username) {
+            showError('Veuillez entrer un nom d\'utilisateur');
+            return;
+        }
+
+        try {
+            const activeProfile = await getActiveProfile();
+            const filters = {
+                type: typeFilter.value,
+                language: languageFilter.value,
+                sort: sortFilter.value,
+                token: activeProfile?.token,
+                organization: organizationFilter.value,
+                stars: starsFilter.value ? parseInt(starsFilter.value) : null,
+                created: dateCreatedFilter.value,
+                updated: dateUpdatedFilter.value
+            };
+
+            // Utiliser searchRepositories si des filtres avancés sont actifs
+            const hasAdvancedFilters = filters.organization || filters.stars || filters.created || filters.updated;
+            const repos = hasAdvancedFilters 
+                ? await githubAPI.searchRepositories(username, filters)
+                : await githubAPI.fetchRepositories(username, filters.token);
+
+            // Appliquer les filtres supplémentaires si nécessaire
+            const filteredRepos = hasAdvancedFilters ? repos : githubAPI.filterRepositories(repos, filters);
+            
+            displayRepositories(filteredRepos);
+            hideError();
+        } catch (error) {
+            showError(error.message);
+        }
+    }
+
+    // Mise à jour des écouteurs d'événements
+    searchBtn.addEventListener('click', performSearch);
+    typeFilter.addEventListener('change', performSearch);
+    languageFilter.addEventListener('change', performSearch);
+    sortFilter.addEventListener('change', performSearch);
+    organizationFilter.addEventListener('change', performSearch);
+    starsFilter.addEventListener('change', performSearch);
+    dateCreatedFilter.addEventListener('change', performSearch);
+    dateUpdatedFilter.addEventListener('change', performSearch);
+
+    // Ajout de la touche Entrée pour la recherche
+    usernameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+
+    // Gestion du formulaire de profil
+    const addProfileForm = document.getElementById('add-profile-form');
+    if (addProfileForm) {
+        addProfileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const isEditing = submitButton.dataset.editing === 'true';
+            const oldProfileId = submitButton.dataset.profileId;
+
+            const profile = {
+                id: oldProfileId,
+                name: document.getElementById('profile-name').value,
+                username: document.getElementById('profile-username').value,
+                token: document.getElementById('profile-token').value
+            };
+
+            await profileManager.saveProfile(profile);
+            addProfileForm.reset();
+            
+            // Réinitialiser le bouton
+            submitButton.textContent = 'Enregistrer le profil';
+            delete submitButton.dataset.editing;
+            delete submitButton.dataset.profileId;
+        });
     }
 }); 

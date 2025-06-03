@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitView</title>
-    <link rel="stylesheet" href="styles/popup.css">
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
     <div class="container">
@@ -15,6 +15,15 @@
                 </svg>
                 <h1>GitView</h1>
             </div>
+            <button class="theme-switch" id="theme-switch">
+                <svg class="sun-icon" viewBox="0 0 24 24" width="16" height="16">
+                    <path fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06z"/>
+                </svg>
+                <svg class="moon-icon hidden" viewBox="0 0 24 24" width="16" height="16">
+                    <path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+                </svg>
+                <span class="theme-text">Thème clair</span>
+            </button>
         </header>
 
         <div class="tabs">
@@ -28,21 +37,55 @@
                     <input type="text" id="username" placeholder="Nom d'utilisateur GitHub" autocomplete="off">
                     <button id="search-btn">Rechercher</button>
                 </div>
+                <button id="advanced-search-toggle" class="secondary-button">Recherche avancée</button>
+            </div>
+
+            <div id="advanced-search" class="hidden">
+                <div class="advanced-filters">
+                    <div class="filter-group">
+                        <label for="organization-filter">Organisation</label>
+                        <select id="organization-filter" title="Sélectionner une organisation">
+                            <option value="">Toutes les organisations</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="stars-filter">Nombre minimum d'étoiles</label>
+                        <div class="input-with-icon">
+                            <span class="icon">⭐</span>
+                            <input type="number" id="stars-filter" min="0" placeholder="0" title="Nombre minimum d'étoiles">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label for="date-created-filter">Créé après</label>
+                        <div class="input-with-icon">
+                            <span class="icon">📅</span>
+                            <input type="date" id="date-created-filter" title="Date de création minimale">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label for="date-updated-filter">Mis à jour après</label>
+                        <div class="input-with-icon">
+                            <span class="icon">🔄</span>
+                            <input type="date" id="date-updated-filter" title="Date de mise à jour minimale">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="filters">
-                <select id="type-filter">
+                <select id="type-filter" title="Filtrer par type de dépôt" aria-label="Filtrer par type de dépôt">
                     <option value="all">Tous</option>
                     <option value="public">Public</option>
                     <option value="private">Privé</option>
                 </select>
-                <select id="language-filter">
+                <select id="language-filter" title="Filtrer par langage" aria-label="Filtrer par langage">
                     <option value="all">Tous les langages</option>
                 </select>
-                <select id="sort-filter">
+                <select id="sort-filter" title="Trier les résultats" aria-label="Trier les résultats">
                     <option value="updated">Récent</option>
                     <option value="stars">⭐ Stars</option>
                     <option value="forks">Forks</option>
+                    <option value="created">Date de création</option>
                 </select>
             </div>
 
