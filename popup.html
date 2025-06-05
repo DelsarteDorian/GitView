@@ -101,6 +101,21 @@
         <div class="tab-content hidden" id="profiles-tab">
             <div class="profiles-section">
                 <h2>Profils enregistrés</h2>
+                <div class="help-section">
+                    <details>
+                        <summary>Comment utiliser les profils ?</summary>
+                        <div class="help-content">
+                            <p>Les profils vous permettent de sauvegarder vos identifiants GitHub pour une utilisation rapide :</p>
+                            <ul>
+                                <li><strong>Profil actif</strong> : Le profil actif sera automatiquement utilisé pour les recherches GitHub. Un seul profil peut être actif à la fois.</li>
+                                <li><strong>Rechercher</strong> : Lance une recherche avec le nom d'utilisateur du profil.</li>
+                                <li><strong>Modifier</strong> : Permet de modifier les informations du profil.</li>
+                                <li><strong>Supprimer</strong> : Supprime le profil de la liste.</li>
+                            </ul>
+                            <p>Pour définir un profil comme actif, cliquez sur "Définir comme actif". Le profil actif sera marqué d'un badge vert.</p>
+                        </div>
+                    </details>
+                </div>
                 <div id="profiles-list">
                     <!-- Les profils seront affichés ici -->
                 </div>
@@ -164,6 +179,8 @@
 
     <script src="js/crypto.js"></script>
     <script src="js/api.js"></script>
+    <script src="js/cache.js"></script>
+    <script src="js/profile-utils.js"></script>
     <script src="js/profiles.js"></script>
     <script src="js/popup.js"></script>
 </body>
