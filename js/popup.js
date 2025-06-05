@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    // Initialisation du cache
+    const cacheManager = new CacheManager();
+    await cacheManager.loadFromStorage();
+    cacheManager.startAutoCleanup();
+
     // Gestion du thème
     const themeSwitch = document.getElementById('theme-switch');
     const sunIcon = themeSwitch.querySelector('.sun-icon');
@@ -172,10 +177,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         try {
-            // Récupérer le token du profil correspondant
-            const profiles = await chrome.storage.local.get('profiles');
-            const profile = profiles.profiles?.find(p => p.username === username);
-            const token = profile?.token || null;
+            // Récupérer le profil actif
+            const activeProfile = await getActiveProfile();
+            const token = activeProfile?.token || null;
 
             const repos = await githubAPI.fetchRepositories(username, token);
             repositories = repos;
@@ -393,57 +397,64 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Fonction de recherche mise à jour
-    async function performSearch() {
-        const username = usernameInput.value.trim();
+    // Fonction de recherche modifiée pour utiliser le cache
+    async function searchRepositories() {
+        const username = document.getElementById('username').value.trim();
         if (!username) {
             showError('Veuillez entrer un nom d\'utilisateur');
             return;
         }
 
+        const filters = {
+            type: document.getElementById('type-filter').value,
+            language: document.getElementById('language-filter').value,
+            stars: document.getElementById('stars-filter').value,
+            createdAfter: document.getElementById('date-created-filter').value,
+            updatedAfter: document.getElementById('date-updated-filter').value,
+            organization: document.getElementById('organization-filter').value,
+            sort: document.getElementById('sort-filter').value
+        };
+
         try {
+            // Vérifier le cache
+            const cachedResults = await cacheManager.getCachedSearch(username, filters);
+            if (cachedResults) {
+                displayRepositories(cachedResults);
+                return;
+            }
+
+            // Si pas en cache, faire la recherche
             const activeProfile = await getActiveProfile();
-            const filters = {
-                type: typeFilter.value,
-                language: languageFilter.value,
-                sort: sortFilter.value,
-                token: activeProfile?.token,
-                organization: organizationFilter.value,
-                stars: starsFilter.value ? parseInt(starsFilter.value) : null,
-                created: dateCreatedFilter.value,
-                updated: dateUpdatedFilter.value
-            };
-
-            // Utiliser searchRepositories si des filtres avancés sont actifs
-            const hasAdvancedFilters = filters.organization || filters.stars || filters.created || filters.updated;
-            const repos = hasAdvancedFilters 
-                ? await githubAPI.searchRepositories(username, filters)
-                : await githubAPI.fetchRepositories(username, filters.token);
-
-            // Appliquer les filtres supplémentaires si nécessaire
-            const filteredRepos = hasAdvancedFilters ? repos : githubAPI.filterRepositories(repos, filters);
+            const results = await githubAPI.fetchRepositories(username, activeProfile?.token);
             
-            displayRepositories(filteredRepos);
-            hideError();
+            // Appliquer les filtres
+            const filteredResults = githubAPI.filterRepositories(results, filters);
+            
+            // Mettre en cache les résultats
+            await cacheManager.cacheSearch(username, filters, filteredResults);
+            await cacheManager.saveToStorage();
+
+            displayRepositories(filteredResults);
         } catch (error) {
-            showError(error.message);
+            console.error('Erreur lors de la recherche:', error);
+            showError('Erreur lors de la recherche des dépôts');
         }
     }
 
     // Mise à jour des écouteurs d'événements
-    searchBtn.addEventListener('click', performSearch);
-    typeFilter.addEventListener('change', performSearch);
-    languageFilter.addEventListener('change', performSearch);
-    sortFilter.addEventListener('change', performSearch);
-    organizationFilter.addEventListener('change', performSearch);
-    starsFilter.addEventListener('change', performSearch);
-    dateCreatedFilter.addEventListener('change', performSearch);
-    dateUpdatedFilter.addEventListener('change', performSearch);
+    searchBtn.addEventListener('click', searchRepositories);
+    typeFilter.addEventListener('change', searchRepositories);
+    languageFilter.addEventListener('change', searchRepositories);
+    sortFilter.addEventListener('change', searchRepositories);
+    organizationFilter.addEventListener('change', searchRepositories);
+    starsFilter.addEventListener('change', searchRepositories);
+    dateCreatedFilter.addEventListener('change', searchRepositories);
+    dateUpdatedFilter.addEventListener('change', searchRepositories);
 
     // Ajout de la touche Entrée pour la recherche
     usernameInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            performSearch();
+            searchRepositories();
         }
     });
 
