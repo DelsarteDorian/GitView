@@ -1,6 +1,6 @@
 # GitView
 
-![GitView Logo](icons/icon128.png)
+![GitView Logo](icons/icon-128.png)
 
 GitView est une extension de navigateur qui vous permet de rechercher et d'accéder rapidement à vos dépôts GitHub directement depuis votre navigateur.
 
