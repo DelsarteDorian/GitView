@@ -248,28 +248,25 @@ select {
 .profile-info p {
     margin: 4px 0 0;
     font-size: 12px;
-    color: #8b949e;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: var(--meta-color);
 }
 
 .profile-actions {
     display: flex;
     gap: 8px;
-    flex-shrink: 0;
+}
+
+.profile-actions button {
+    padding: 4px 8px;
+    font-size: 12px;
 }
 
 .search-profile {
-    background-color: var(--primary-color);
-    padding: 4px 8px;
-    font-size: 12px;
+    background-color: var(--button-bg);
 }
 
 .delete-profile {
-    background-color: #f85149;
-    padding: 4px 8px;
-    font-size: 12px;
+    background-color: var(--danger-color);
 }
 
 .delete-profile:hover {
@@ -277,30 +274,29 @@ select {
 }
 
 .add-profile-section {
-    margin-top: 16px;
-    padding-top: 16px;
+    margin-top: 24px;
+    padding-top: 24px;
     border-top: 1px solid var(--border-color);
 }
 
 .add-profile-section h2 {
+    margin-bottom: 16px;
     font-size: 16px;
-    margin-bottom: 12px;
 }
 
 .add-profile-section .input-group {
     flex-direction: column;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .add-profile-section label {
-    font-size: 12px;
-    margin-bottom: 4px;
-    color: #8b949e;
+    margin-bottom: 8px;
+    color: var(--text-color);
 }
 
 .add-profile-section input {
     width: 100%;
-    padding: 8px;
+    padding: 8px 12px;
     border: 1px solid var(--border-color);
     border-radius: 6px;
     background-color: var(--bg-color);
@@ -309,27 +305,27 @@ select {
 
 .add-profile-section button[type="submit"] {
     width: 100%;
-    margin-top: 8px;
-}
-
-.hidden {
-    display: none;
-}
-
-#error-message {
-    color: #f85149;
-    padding: 8px;
-    border-radius: 6px;
-    background-color: rgba(248, 81, 73, 0.1);
     margin-top: 16px;
 }
 
-/* Theme switch */
+.hidden {
+    display: none !important;
+}
+
+#error-message {
+    color: var(--danger-color);
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid var(--danger-color);
+    border-radius: 6px;
+    background-color: rgba(248, 81, 73, 0.1);
+}
+
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 40px;
+    height: 20px;
 }
 
 .switch input {
@@ -345,17 +341,17 @@ select {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: var(--border-color);
     transition: .4s;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
     background-color: white;
     transition: .4s;
 }
@@ -365,73 +361,69 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-    transform: translateX(26px);
+    transform: translateX(20px);
 }
 
 .slider.round {
-    border-radius: 34px;
+    border-radius: 20px;
 }
 
 .slider.round:before {
     border-radius: 50%;
 }
 
-/* Repository cards */
 .repository-card {
+    padding: 16px;
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    padding: 16px;
-    margin-bottom: 8px;
-    transition: background-color 0.2s;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: all 0.2s;
 }
 
 .repository-card:hover {
-    background-color: var(--hover-color);
+    border-color: var(--primary-color);
 }
 
 .repository-card h3 {
-    margin-bottom: 8px;
+    margin: 0 0 8px;
+    font-size: 16px;
 }
 
 .repository-card p {
-    color: #586069;
-    margin-bottom: 8px;
+    margin: 0 0 8px;
+    color: var(--meta-color);
 }
 
 .repository-stats {
     display: flex;
     gap: 16px;
-    font-size: 14px;
+    font-size: 12px;
+    color: var(--meta-color);
 }
 
-/* Grid view */
 .grid-view {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 16px;
+    margin-top: 16px;
 }
 
-/* Detailed view */
 .detailed-view .repository-card {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    margin-bottom: 16px;
 }
 
 .detailed-view .repository-stats {
-    margin-top: auto;
+    margin-top: 8px;
 }
 
 .token-help {
-    display: block;
+    font-size: 12px;
+    color: var(--meta-color);
     margin-top: 8px;
-    font-size: 11px;
-    color: #8b949e;
-    line-height: 1.6;
-    background-color: rgba(255, 255, 255, 0.05);
-    padding: 12px;
-    border-radius: 6px;
+    padding: 8px;
     border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .token-help ol {
@@ -440,11 +432,266 @@ input:checked + .slider:before {
 }
 
 .token-help li {
-    margin-bottom: 4px;
+    margin: 4px 0;
 }
 
 .token-help strong {
-    color: #f85149;
-    display: block;
+    color: var(--danger-color);
+}
+
+.theme-switch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.theme-switch:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-text {
+    font-size: 12px;
+}
+
+.sun-icon, .moon-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.help-section {
+    margin-bottom: 16px;
+}
+
+.help-section summary {
+    cursor: pointer;
+    color: var(--link-color);
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.help-section summary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.help-content {
     margin-top: 8px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.help-content p {
+    margin-bottom: 8px;
+}
+
+.help-content ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.help-content li {
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.help-content li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+}
+
+.active-profile-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.secondary-button {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.secondary-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.advanced-filters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 12px;
+    color: var(--meta-color);
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon .icon {
+    position: absolute;
+    left: 8px;
+    color: var(--meta-color);
+}
+
+.input-with-icon input {
+    padding-left: 28px;
+}
+
+.import-export-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.import-export-buttons button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.import-export-buttons button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.import-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.import-dialog-content {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 16px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.import-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.import-dialog-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.import-dialog-close {
+    background: none;
+    border: none;
+    color: var(--meta-color);
+    cursor: pointer;
+    padding: 4px;
+}
+
+.import-dialog-close:hover {
+    color: var(--text-color);
+}
+
+.import-profiles-list {
+    margin-bottom: 16px;
+}
+
+.import-profile-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.import-profile-item input[type="checkbox"] {
+    margin: 0;
+}
+
+.import-profile-info {
+    flex: 1;
+}
+
+.import-profile-info h4 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.import-profile-info p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: var(--meta-color);
+}
+
+.import-dialog-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.import-dialog-actions button {
+    flex: 1;
+}
+
+.import-all-button {
+    background-color: var(--primary-color);
+}
+
+.cancel-button {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.cancel-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 } 
