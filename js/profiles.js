@@ -79,17 +79,17 @@ class ProfileManager {
             } else {
                 // Mise à jour d'un profil existant
                 const existingIndex = this.profiles.findIndex(p => p.id === profile.id);
-                if (existingIndex !== -1) {
+        if (existingIndex !== -1) {
                     console.log('Mise à jour du profil existant:', existingIndex);
                     this.profiles[existingIndex] = {
                         ...this.profiles[existingIndex],
                         ...profile
                     };
-                } else {
+        } else {
                     // Si le profil n'existe pas mais a un ID, on le crée
                     console.log('Profil non trouvé avec cet ID, création d\'un nouveau');
                     profile.id = crypto.randomUUID();
-                    this.profiles.push(profile);
+            this.profiles.push(profile);
                 }
             }
 
@@ -129,7 +129,7 @@ class ProfileManager {
             }
 
             await this.saveProfiles();
-            this.updateProfilesList();
+        this.updateProfilesList();
         } catch (error) {
             console.error('Erreur lors de la suppression du profil:', error);
             throw error;
@@ -150,7 +150,7 @@ class ProfileManager {
             }
             
             await this.saveProfiles();
-            this.updateProfilesList();
+        this.updateProfilesList();
         } catch (error) {
             console.error('Erreur lors de la modification du profil actif:', error);
             throw error;
@@ -327,23 +327,23 @@ class ProfileManager {
 
     setupEventListeners() {
         // Gestion du formulaire
-        const addProfileForm = document.getElementById('add-profile-form');
-        if (addProfileForm) {
+    const addProfileForm = document.getElementById('add-profile-form');
+    if (addProfileForm) {
             // Supprimer tous les écouteurs d'événements existants
             const newForm = addProfileForm.cloneNode(true);
             addProfileForm.parentNode.replaceChild(newForm, addProfileForm);
 
             // Ajouter un seul écouteur d'événement
             newForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
+            e.preventDefault();
                 e.stopPropagation();
                 console.log('Soumission du formulaire');
 
                 const submitButton = newForm.querySelector('button[type="submit"]');
-                const isEditing = submitButton.dataset.editing === 'true';
+            const isEditing = submitButton.dataset.editing === 'true';
                 const oldProfileId = submitButton.dataset.profileId;
 
-                const profile = {
+            const profile = {
                     id: oldProfileId,
                     name: newForm.querySelector('#profile-name').value,
                     username: newForm.querySelector('#profile-username').value,
@@ -354,10 +354,10 @@ class ProfileManager {
                     console.log('Sauvegarde du profil:', profile);
                     await this.saveProfile(profile);
                     newForm.reset();
-                    
-                    // Réinitialiser le bouton
-                    submitButton.textContent = 'Enregistrer le profil';
-                    delete submitButton.dataset.editing;
+            
+            // Réinitialiser le bouton
+            submitButton.textContent = 'Enregistrer le profil';
+            delete submitButton.dataset.editing;
                     delete submitButton.dataset.profileId;
                 } catch (error) {
                     console.error('Erreur lors de la sauvegarde:', error);
